@@ -20,7 +20,21 @@
 # 'LFLAG': linker flags
 # 'CFLAG': compiler flags
 
-include Debug.mk
+ifeq ("$(CFG)","")
+
+ifneq ("$(Cfg)","")
+CFG=$(Cfg)
+else ifneq ("$(cfg)","")
+CFG=$(cfg)
+endif
+
+endif
+
+ifeq ("$(CFG)$(Cfg)$(cfg)","")
+include bin/.make/Debug.mk
+else
+$(eval include bin/.make/$(CFG).mk)
+endif
 
 # default definitions
 ifeq ("$(COMPILER)","")
