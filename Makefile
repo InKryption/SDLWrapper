@@ -71,7 +71,7 @@ $(foreach src,$(SOURCE_FILES),$(eval $(call Compile_Source,$(src))))
 
 # Run the executable
 run: $(EXECUTABLE)
-	@$(BIN)/run.bs $(EXECUTABLE)
+	@powershell.exe $(EXECUTABLE)
 
 # Create directory for the output if it doesn't exist
 dir:
