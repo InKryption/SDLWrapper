@@ -86,7 +86,7 @@ LIBS:=$(foreach name,$(LIBNAME),-l$(name))
 # List of Source file paths, and a list of matching object files
 SOURCE_FILES:=$(filter %.cpp,$(call All_Files_Inside,$(SRC_FOLDER)))
 OBJECT_FILES:=$(foreach src,$(SOURCE_FILES),$(OBJDIR)/$(firstword $(subst ., ,$(notdir $(src)))).o)
-DIRTY_OBJECTS=$(foreach pdo,$(wildcard $(OBJDIR)/*),$(if $(filter $(pdo),$(OBJECT_FILES)),,$(pdo))) $(filter-out $(2),$(wildcard $(ODIR)/*.exe))
+DIRTY_OBJECTS=$(foreach pdo,$(wildcard $(OBJDIR)/*),$(if $(filter $(pdo),$(OBJECT_FILES)),,$(pdo))) $(filter-out $(EXECUTABLE),$(wildcard $(ODIR)/*.exe))
 
 LINKER_FLAGS:=$(LFLAG) $(LIBRARY_PATH) $(LIBS)
 COMPILER_FLAGS:=$(CFLAG) $(INCLUDE_PATH)
@@ -116,6 +116,7 @@ clean:
 
 reset: clean
 	@rm $(wildcard $(ODIR)/.exe*)
+	@rm $(wildcard $(ODIR)/*.exe)
 	@rm $(wildcard $(OBJDIR)/*.o)
 
 help:
