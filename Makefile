@@ -78,7 +78,7 @@ dir:
 	-mkdir -p $(OBJDIR)
 
 # Clean all object files that have no equivalent source file
-Dirty_Objects=$(foreach pdo,$(wildcard $(OBJDIR)/*),$(if $(filter $(pdo),$(OBJECT_FILES)),,$(pdo)))
+Dirty_Objects=$(foreach pdo,$(wildcard $(OBJDIR)/*),$(if $(filter $(pdo),$(OBJECT_FILES)),,$(pdo))) $(filter-out $(EXECUTABLE),$(wildcard $(ODIR)/*.exe))
 
 # Clean up object files
 clean:
