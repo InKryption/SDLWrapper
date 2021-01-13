@@ -59,7 +59,7 @@ BUILD:=Debug
 endif
 
 ifeq ("$(NAME)","")
-NAME=PROJECT
+NAME:=PROJECT
 endif
 
 # Internal definitions
