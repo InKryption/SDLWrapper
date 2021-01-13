@@ -31,12 +31,13 @@ endif
 endif
 
 ifeq ("$(CFG)$(Cfg)$(cfg)","")
-include bin/.make/Debug.mk
+include .make/Debug.mk
 else
-$(eval include bin/.make/$(CFG).mk)
+$(eval include .make/$(CFG).mk)
 endif
 
 # default definitions
+
 ifeq ("$(COMPILER)","")
 COMPILER:=g++
 endif
@@ -83,7 +84,6 @@ INCLUDE_PATH:=$(foreach path,$(INCLUDE),-I$(path))
 LIBRARY_PATH:=$(foreach path,$(LIBRARY),-L$(path))
 LIBS:=$(foreach name,$(LIBNAME),-l$(name))
 
-# List of Source file paths, and a list of matching object files
 SOURCE_FILES:=$(filter %.cpp,$(call All_Files_Inside,$(SRC_FOLDER)))
 OBJECT_FILES:=$(foreach src,$(SOURCE_FILES),$(OBJDIR)/$(firstword $(subst ., ,$(notdir $(src)))).o)
 DIRTY_OBJECTS=$(foreach pdo,$(wildcard $(OBJDIR)/*),$(if $(filter $(pdo),$(OBJECT_FILES)),,$(pdo))) $(filter-out $(EXECUTABLE),$(wildcard $(ODIR)/*.exe))
@@ -91,35 +91,39 @@ DIRTY_OBJECTS=$(foreach pdo,$(wildcard $(OBJDIR)/*),$(if $(filter $(pdo),$(OBJEC
 LINKER_FLAGS:=$(LFLAG) $(LIBRARY_PATH) $(LIBS)
 COMPILER_FLAGS:=$(CFLAG) $(INCLUDE_PATH)
 
-# Main targets:
-all: $(if $(NAME),$(EXECUTABLE),reset)
+# Main Targets
 
 $(EXECUTABLE): $(OBJECT_FILES)
 	-$(COMPILER) $(OBJECT_FILES) -o $(EXECUTABLE) $(LINKER_FLAGS)
 
 $(foreach src,$(SOURCE_FILES),$(eval $(call Compile_Source,$(src))))
 
-# Utility targets:
+# Utility Targets:
 .PHONY: clean dir run help
 
 # Run the executable via powershell
 run: $(EXECUTABLE)
-	@powershell.exe $(EXECUTABLE)
+	@powershell.exe $(EXECUTABLE) $(ARG)
 
 # Create directory for the output if it doesn't exist
 dir:
 	-mkdir -p $(OBJDIR)
 
+# Clean output
 clean:
 	@rm $(DIRTY_OBJECTS)
 	@echo Removed $(if $(foreach do,$(DIRTY_OBJECTS),'$(do)'),$(foreach do,$(DIRTY_OBJECTS),'$(do)'),nothing)
 
+# Delete all object files and executables
 reset: clean
 	@rm $(wildcard $(ODIR)/.exe*)
 	@rm $(wildcard $(ODIR)/*.exe)
 	@rm $(wildcard $(OBJDIR)/*.o)
 
+# Help command
 help:
+	@echo 'make CFG=<CFG Makfile in .make folder>'
 	@echo 'make [...] run' to run program
 	@echo 'make [...] dir' to create necessary directories
 	@echo 'make [...] clean' to clean target build
+	@echo 'make [...] reset' to delete all object files and executables in target build
