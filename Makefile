@@ -59,7 +59,7 @@ BUILD:=Debug
 endif
 
 ifeq ("$(NAME)","")
-NAME:=PROJECT
+NAME=PROJECT
 endif
 
 # Internal definitions
@@ -120,7 +120,7 @@ reset: clean
 	@rm $(wildcard $(ODIR)/*.exe)
 	@rm $(wildcard $(OBJDIR)/*.o)
 
-# Help command
+# 
 help:
 	@echo 'make CFG=<CFG Makfile in .make folder>'
 	@echo 'make [...] run' to run program
