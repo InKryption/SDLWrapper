@@ -16,7 +16,7 @@ LFLAG:=
 
 CFLAG:=\
 -D_DEBUG \
--std=gnu++17 \
+-std=c++17 \
 -g -Og \
 -Wall -Werror -Wpedantic \
 -Wno-error=pedantic \
