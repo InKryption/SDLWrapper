@@ -15,11 +15,7 @@ LIBNAME:=
 LFLAG:=
 
 CFLAG:=\
--D_DEBUG \
--std=gnu++17 \
--g -Og \
--Wall -Werror -Wpedantic \
--Wno-error=pedantic \
--Wno-error=unknown-pragmas \
--Wno-error=unused-variable \
--Wno-error=unused-but-set-variable
+-D_DEBUG -g -Og \
+-std=c++17 \
+-Wall -Wextra -Wpedantic -ansi -pedantic -pedantic-errors
+
