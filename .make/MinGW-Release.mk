@@ -15,7 +15,7 @@ LIBRARY:=
 LIBNAME:=
 
 LFLAG:=\
--static
 
 CFLAG:=\
--std=c++2a -O3 \
+-std=c++2a \
+-DNDEBUG -O3 \

@@ -15,9 +15,8 @@ LIBRARY:=
 LIBNAME:=
 
 LFLAG:=\
--static -l:libstdc++fs.a
 
 CFLAG:=\
 -std=c++2a \
--D_DEBUG -g \
+-D_DEBUG -Og -g \
 -Wall -Wextra -Wpedantic -pedantic -pedantic-errors \
