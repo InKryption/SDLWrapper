@@ -27,6 +27,22 @@ namespace ink::SDL {
 			#undef INK_CC_ARM_DECEIT
 		#endif
 		
+		#ifdef SDL_TRUE
+			#undef SDL_TRUE
+		#endif
+		
+		#ifdef SDL_FALSE
+			#undef SDL_FALSE
+		#endif
+		
+		#ifdef SDL_AUDIOCVT_PACKED
+			#undef SDL_AUDIOCVT_PACKED
+		#endif
+		
+		#ifdef DECLSPEC
+			#undef DECLSPEC
+		#endif
+		
 		#include "Constants.hpp"
 		#include "Macros.hpp"
 		

@@ -264,3 +264,15 @@
 #if defined(SDL_SCANF_VARARG_FUNC)
 	#undef SDL_SCANF_VARARG_FUNC
 #endif
+
+// SDL_audio.h
+
+#ifdef SDL_LoadWAV
+	[[maybe_unused]] static auto
+	LoadWAV(const char* file, SDL_AudioSpec* spec, Uint8** audio_buf, Uint32* audio_len)
+	{
+		return SDL_LoadWAV(file, spec, audio_buf, audio_len);
+		#undef SDL_LoadWAV
+	}
+#endif
+
