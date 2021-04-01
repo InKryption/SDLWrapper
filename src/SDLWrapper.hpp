@@ -7,44 +7,16 @@ namespace ink::SDL {
 	
 	namespace internal {
 		
-		#if !defined(__CC_ARM)
-			#define INK_CC_ARM_DECEIT
-			#define __CC_ARM
-		#endif
 		
-		#define SDL_assert_h_
-		#define SDL_atomic_h_
-		#define SDL_filesystem_h_
-		#define SDL_log_h_
+		#define SDL_atomic_h_ // Duplicates the standard library. Also, too lazy to actually go through the trouble of cleaning up the macros
+		
 		#include <SDL2/SDL.h>
-		#undef SDL_log_h_
-		#undef SDL_filesystem_h_
-		#undef SDL_atomic_h_
-		#undef SDL_assert_h_
 		
-		#if defined(INK_CC_ARM_DECEIT)
-			#undef __CC_ARM
-			#undef INK_CC_ARM_DECEIT
-		#endif
-		
-		#ifdef SDL_TRUE
-			#undef SDL_TRUE
-		#endif
-		
-		#ifdef SDL_FALSE
-			#undef SDL_FALSE
-		#endif
-		
-		#ifdef SDL_AUDIOCVT_PACKED
-			#undef SDL_AUDIOCVT_PACKED
-		#endif
-		
-		#ifdef DECLSPEC
-			#undef DECLSPEC
-		#endif
-		
-		#include "Constants.hpp"
-		#include "Macros.hpp"
+		#include "Undefs/unSDL.h"
+		#include "Undefs/unSDL_main.h"
+		#include "Undefs/unSDL_stdinc.h"
+		#include "Undefs/unSDL_assert.h"
+		#include "Undefs/unSDL_audio.h"
 		
 	}
 	
