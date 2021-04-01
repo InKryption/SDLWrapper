@@ -1,16 +1,16 @@
+#ifdef SDL_BYTEORDER
+	static constexpr auto BYTEORDER = SDL_BYTEORDER;
+	#undef SDL_BYTEORDER
+#endif
+
 #ifdef SDL_LIL_ENDIAN
-	static constexpr LIL_ENDIAN = SDL_LIL_ENDIAN;
+	static constexpr auto LIL_ENDIAN = SDL_LIL_ENDIAN;
 	#undef SDL_LIL_ENDIAN
 #endif
 
 #ifdef SDL_BIG_ENDIAN
-	static constexpr BIG_ENDIAN = SDL_BIG_ENDIAN;
+	static constexpr auto BIG_ENDIAN = SDL_BIG_ENDIAN;
 	#undef SDL_BIG_ENDIAN
-#endif
-
-#ifdef SDL_BYTEORDER
-	static constexpr BYTEORDER = SDL_BYTEORDER;
-	#undef SDL_BYTEORDER
 #endif
 
 #ifdef SDL_SwapLE16

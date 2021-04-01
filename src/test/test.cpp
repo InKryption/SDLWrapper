@@ -13,7 +13,5 @@ int main() {
 	
 	ink::SDL::internal::SDL_DestroyWindow(wnd);
 	
-	constexpr auto b = SDL_MAIN_HANDLED;
-	
 	return 0;
 }

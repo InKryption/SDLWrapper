@@ -21,6 +21,9 @@ namespace ink::SDL {
 		#include "Undefs/unSDL_endian.h"
 		#include "Undefs/unSDL_error.h"
 		#include "Undefs/unSDL_events.h"
+		#include "Undefs/unSDL_gamecontroller.h"
+		#include "Undefs/unSDL_haptic.h"
+		#include "Undefs/unSDL_hints.h"
 		
 	}
 	

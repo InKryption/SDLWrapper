@@ -8,6 +8,14 @@
 	#undef SDL_PRESSED
 #endif
 
+#ifdef SDL_GetEventState
+	static inline auto GetEventState(Uint32 type)
+	{
+		return SDL_GetEventState(type);
+		#undef SDL_GetEventState
+	}
+#endif
+
 #ifdef SDL_TEXTEDITINGEVENT_TEXT_SIZE
 	static constexpr auto TEXTEDITINGEVENT_TEXT_SIZE = SDL_TEXTEDITINGEVENT_TEXT_SIZE;
 	#undef SDL_TEXTEDITINGEVENT_TEXT_SIZE
@@ -37,12 +45,3 @@
 	static constexpr auto ENABLE = SDL_ENABLE;
 	#undef SDL_ENABLE
 #endif
-
-#ifdef SDL_GetEventState
-	static inline auto GetEventState(Uint32 type)
-	{
-		return SDL_GetEventState(type);
-		#undef SDL_GetEventState
-	}
-#endif
-
