@@ -17,6 +17,10 @@ namespace ink::SDL {
 		#include "Undefs/unSDL_stdinc.h"
 		#include "Undefs/unSDL_assert.h"
 		#include "Undefs/unSDL_audio.h"
+		#include "Undefs/unSDL_cpuinfo.h"
+		#include "Undefs/unSDL_endian.h"
+		#include "Undefs/unSDL_error.h"
+		#include "Undefs/unSDL_events.h"
 		
 	}
 	
