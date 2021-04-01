@@ -9,6 +9,7 @@ namespace ink::SDL {
 		
 		
 		#define SDL_atomic_h_ // Duplicates the standard library. Also, too lazy to actually go through the trouble of cleaning up the macros
+		#define SDL_mutex_h_ // See above comment.
 		
 		#include <SDL2/SDL.h>
 		
@@ -24,6 +25,9 @@ namespace ink::SDL {
 		#include "Undefs/unSDL_gamecontroller.h"
 		#include "Undefs/unSDL_haptic.h"
 		#include "Undefs/unSDL_hints.h"
+		#include "Undefs/unSDL_joystick.h"
+		#include "Undefs/unSDL_log.h"
+		#include "Undefs/unSDL_rwops.h"
 		
 	}
 	
