@@ -30,13 +30,18 @@
 
 #ifdef RW_SEEK_SET
 	static constexpr auto RWOPS_SEEK_SET = RW_SEEK_SET;
+	#undef RW_SEEK_SET
+	static constexpr auto RW_SEEK_SET = RWOPS_SEEK_SET;
 #endif
 
 #ifdef RW_SEEK_CUR
 	static constexpr auto RWOPS_SEEK_CUR = RW_SEEK_CUR;
+	#undef RW_SEEK_CUR
+	static constexpr auto RW_SEEK_CUR = RWOPS_SEEK_CUR;
 #endif
 
 #ifdef RW_SEEK_END
 	static constexpr auto RWOPS_SEEK_END = RW_SEEK_END;
+	#undef RW_SEEK_END
+	static constexpr auto RW_SEEK_END = RWOPS_SEEK_END;
 #endif
-
