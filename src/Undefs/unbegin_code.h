@@ -28,5 +28,15 @@
 	#undef SDL_NORETURN
 #endif
 
+#ifdef SDL_DEPRECATED
+	static constexpr auto DEPRECATED = Stringize(SDL_DEPRECATED);
+	#undef SDL_DEPRECATED
+#endif
+
+#ifdef SDL_UNUSED
+	static constexpr auto UNUSED = Stringize(SDL_UNUSED);
+	#undef SDL_UNUSED
+#endif
+
 #undef Stringize
 #undef rStringize
