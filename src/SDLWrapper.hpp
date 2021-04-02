@@ -36,6 +36,8 @@ namespace ink::SDL {
 		#include "Undefs/unSDL_version.h"
 		#include "Undefs/unSDL_video.h"
 		
+		#include "Undefs/unbegin_code.h"
+		
 	}
 	
 }
