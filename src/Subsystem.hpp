@@ -2,7 +2,7 @@
 #define INK_SDLWRAPPER_SUBSYSTEM_STRUCT_HEADER_FILE_GUARD
 
 #include <stdio.h>
-#include "Undefs.hpp"
+#include "SDLWrapper.hpp"
 
 namespace ink::SDL {
 	
