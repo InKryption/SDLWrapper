@@ -14,11 +14,20 @@ namespace ink::SDL {
 		
 		#include <SDL2/SDL.h>
 		
-		#include <SDL2/SDL_mixer.h>
-		#include "Undefs/unSDL_mixer.h"
+		namespace MIX {
+			#include <SDL2/SDL_mixer.h>
+			#include "Undefs/unSDL_mixer.h"
+		}
 		
-		#include <SDL2/SDL_image.h>
-		#include "Undefs/unSDL_image.h"
+		namespace IMG {
+			#include <SDL2/SDL_image.h>
+			#include "Undefs/unSDL_image.h"
+		}
+		
+		namespace TTF {
+			#include "SDL2/SDL_ttf.h"
+			#include "Undefs/unSDL_ttf.h"
+		}
 		
 		#include "Undefs/unSDL.h"
 		#include "Undefs/unSDL_main.h"
