@@ -3,5 +3,6 @@
 
 #include "includes_undefs.hpp"
 #include "Subsystem.hpp"
+#include "Frame.hpp"
 
 #endif
