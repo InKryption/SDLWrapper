@@ -18,7 +18,6 @@ int main() {
 		.init()
 	;
 	
-	SDL_Init(INIT_EVERYTHING);
 	auto wnd = SDL_CreateWindow("", 100, 100, 100, 100, SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_RESIZABLE);
 	
 	bool running = true;
