@@ -2,7 +2,6 @@
 #include <thread>
 #include <stdio.h>
 
-#define USE_SDL_MIXER_LIB 1
 #define SDL_MAIN_HANDLED 1
 #include "SDLWrapper.hpp"
 
@@ -10,8 +9,8 @@ int main() {
 	
 	using namespace ink::SDL::internal;
 	
-	ink::SDL::internal::SDL_Init(ink::SDL::internal::INIT_EVERYTHING);
-	auto wnd = ink::SDL::internal::SDL_CreateWindow("", 100, 100, 100, 100, ink::SDL::internal::SDL_WindowFlags::SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_RESIZABLE);
+	SDL_Init(INIT_EVERYTHING);
+	auto wnd = SDL_CreateWindow("", 100, 100, 100, 100, SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_RESIZABLE);
 	
 	bool running = true;
 	
@@ -23,7 +22,6 @@ int main() {
 			break;
 		}
 		
-		
 	}
 	
 	SDL_DestroyWindow(wnd);
@@ -31,3 +29,4 @@ int main() {
 	
 	return 0;
 }
+
