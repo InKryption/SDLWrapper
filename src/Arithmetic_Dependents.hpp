@@ -26,6 +26,9 @@ namespace ink::SDL {
 			static constexpr auto& RenderDrawRect = internal::SDL_RenderDrawRect;
 			static constexpr auto& RenderDrawRects = internal::SDL_RenderDrawRects;
 			
+			static constexpr auto& RenderFillRect = internal::SDL_RenderFillRect;
+			static constexpr auto& RenderFillRects = internal::SDL_RenderFillRects;
+			
 			static constexpr auto& RenderCopy = internal::SDL_RenderCopy;
 			static constexpr auto& RenderCopyEx = internal::SDL_RenderCopyEx;
 			
@@ -43,6 +46,9 @@ namespace ink::SDL {
 			
 			static constexpr auto& RenderDrawRect = internal::SDL_RenderDrawRectF;
 			static constexpr auto& RenderDrawRects = internal::SDL_RenderDrawRectsF;
+			
+			static constexpr auto& RenderFillRect = internal::SDL_RenderFillRectF;
+			static constexpr auto& RenderFillRects = internal::SDL_RenderFillRectsF;
 			
 			static constexpr auto& RenderCopy = internal::SDL_RenderCopyF;
 			static constexpr auto& RenderCopyEx = internal::SDL_RenderCopyExF;
