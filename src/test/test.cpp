@@ -2,6 +2,7 @@
 #include <thread>
 #include <stdio.h>
 
+#define USE_SDL_MIXER_LIB 1
 #define SDL_MAIN_HANDLED 1
 #include "SDLWrapper.hpp"
 

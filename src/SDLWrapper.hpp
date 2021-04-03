@@ -17,6 +17,8 @@ namespace ink::SDL {
 		#include <SDL2/SDL_mixer.h>
 		#include "Undefs/unSDL_mixer.h"
 		
+		#include <SDL2/SDL_image.h>
+		
 		#include "Undefs/unSDL.h"
 		#include "Undefs/unSDL_main.h"
 		#include "Undefs/unSDL_stdinc.h"
