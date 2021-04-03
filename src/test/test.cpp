@@ -34,7 +34,6 @@ int main() {
 	}
 	
 	SDL_DestroyWindow(wnd);
-	SDL_Quit();
 	
 	return 0;
 }

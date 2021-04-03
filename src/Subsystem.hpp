@@ -27,6 +27,14 @@ namespace ink::SDL {
 		private: using
 		flagT = internal::Uint32;
 		
+		public: ~Subsystem()
+		{
+			internal::TTF::TTF_Quit();
+			internal::IMG::IMG_Quit();
+			internal::MIX::Mix_Quit();
+			internal::SDL_Quit();
+		}
+		
 		public: void
 		init()
 		{
