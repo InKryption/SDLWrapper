@@ -2,12 +2,21 @@
 #include <thread>
 #include <stdio.h>
 
-#define SDL_MAIN_HANDLED 1
+#define SDL_MAIN_HANDLED
 #include "SDLWrapper.hpp"
 
 int main() {
 	
 	using namespace ink::SDL::internal;
+	
+	ink::SDL::Subsystem subsys;
+	subsys
+		.SDL_everything()
+		.IMG_PNG()
+		.MIX_FLAC()
+		
+		.init()
+	;
 	
 	SDL_Init(INIT_EVERYTHING);
 	auto wnd = SDL_CreateWindow("", 100, 100, 100, 100, SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_RESIZABLE);
