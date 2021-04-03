@@ -14,6 +14,7 @@ namespace ink::SDL {
 		template<arithmetic T> struct geometry_impl;
 		
 		template<> struct geometry_impl<int> {
+			
 			using Point = internal::SDL_Point;
 			using Rect = internal::SDL_Rect;
 			
@@ -35,6 +36,7 @@ namespace ink::SDL {
 		};
 		
 		template<> struct geometry_impl<float> {
+			
 			using Point = internal::SDL_FPoint;
 			using Rect = internal::SDL_FRect;
 			
