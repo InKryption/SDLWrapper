@@ -14,6 +14,9 @@ namespace ink::SDL {
 		
 		#include <SDL2/SDL.h>
 		
+		#include <SDL2/SDL_mixer.h>
+		#include "Undefs/unSDL_mixer.h"
+		
 		#include "Undefs/unSDL.h"
 		#include "Undefs/unSDL_main.h"
 		#include "Undefs/unSDL_stdinc.h"
@@ -34,6 +37,8 @@ namespace ink::SDL {
 		#include "Undefs/unSDL_timer.h"
 		#include "Undefs/unSDL_version.h"
 		#include "Undefs/unSDL_video.h"
+		
+		
 		
 		#include "Undefs/unSDL_config.h"
 		#include "Undefs/unbegin_code.h"
