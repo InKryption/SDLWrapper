@@ -59,6 +59,40 @@ namespace ink::SDL {
 		
 	}
 	
+	template<detail::arithmetic T>
+	class Point:
+	public detail::geometry_impl<T>::Point {
+		
+		private: using
+		underlyingT = typename detail::geometry_impl<T>::Point;
+		
+		public: constexpr
+		Point():
+		underlyingT{0, 0} {}
+		
+		public: constexpr
+		Point(T x, T y):
+		underlyingT{x, y} {}
+		
+		public: constexpr
+		Point(Point const&) = default;
+		
+		public: constexpr
+		Point(Point &&) = default;
+		
+		public: constexpr
+		Point(underlyingT const& other):
+		underlyingT(other) {}
+		
+		public: constexpr
+		Point(underlyingT && other):
+		underlyingT(other) {}
+		
+		public: constexpr
+		Point()
+		
+	};
+	
 }
 
 #endif
