@@ -6,204 +6,70 @@
 
 namespace ink::SDL {
 	
-	/**
-	 * Subsystems initialization and automatic-deinitialization wrapper.
-	 * 
-	 * Each function is prefixed with the library whose flag it pertains to, as in
-	 * SDL_ for the main library, TTF_ for the ttf library, IMG_for the image library, MIX_ for the mixer library.
-	 * 
-	 * Each one returns a reference to the Subsystem instance, and is therefore chainable ( e.g. SDL_timer().SDL_audio().[...] ), all except for
-	 * init(), which returns void.
-	 * 
-	 * Each function toggles its named flag to the opposite state. All flags are off by default. If a library has no flags enabled, it will not be initialized. 
-	 * 
-	 * On destruction, all libraries will be automatically de-initialized,
-	 * so it is best to construct this only at the top-level of any given SDL-related functionality of a program.
-	 * 
-	 * CAUTION: using *_everything will toggle all pertaining flags that are enabled off, and all pretaining flags that are disabled on.
-	*/
+	
+	
 	struct Subsystem {
 		
-		private: using
-		flagT = internal::Uint32;
+		public: struct FlagCtr {
+			
+			using This = FlagCtr;
+			
+			This&	SDL_everything		() { M_sdl_flag ^= internal::INIT_EVERYTHING;		return *this; }
+			
+			This&	SDL_timer			() { M_sdl_flag ^= internal::INIT_TIMER;			return *this; }
+			This&	SDL_audio			() { M_sdl_flag ^= internal::INIT_AUDIO;			return *this; }
+			This&	SDL_video			() { M_sdl_flag ^= internal::INIT_VIDEO;			return *this; }
+			This&	SDL_joystick		() { M_sdl_flag ^= internal::INIT_JOYSTICK;			return *this; }
+			This&	SDL_haptic			() { M_sdl_flag ^= internal::INIT_HAPTIC;			return *this; }
+			This&	SDL_gamecontroller	() { M_sdl_flag ^= internal::INIT_GAMECONTROLLER;	return *this; }
+			This&	SDL_events			() { M_sdl_flag ^= internal::INIT_EVENTS;			return *this; }
+			This&	SDL_sensor			() { M_sdl_flag ^= internal::INIT_SENSOR;			return *this; }
+			This&	SDL_noparachute		() { M_sdl_flag ^= internal::INIT_NOPARACHUTE;		return *this; }
+			
+			
+			
+			This&	MIX_everything		() { return MIX_flac().MIX_mod().MIX_mp3().MIX_ogg().MIX_mid().MIX_opus(); }
+			
+			This&	MIX_flac			() { M_mix_flag ^= internal::MIX::MIX_INIT_FLAC;	return *this; }
+			This&	MIX_mod				() { M_mix_flag ^= internal::MIX::MIX_INIT_MOD;		return *this; }
+			This&	MIX_mp3				() { M_mix_flag ^= internal::MIX::MIX_INIT_MP3;		return *this; }
+			This&	MIX_ogg				() { M_mix_flag ^= internal::MIX::MIX_INIT_OGG;		return *this; }
+			This&	MIX_mid				() { M_mix_flag ^= internal::MIX::MIX_INIT_MID;		return *this; }
+			This&	MIX_opus			() { M_mix_flag ^= internal::MIX::MIX_INIT_OPUS;	return *this; }
+			
+			
+			
+			This&	IMG_everything		() { return IMG_jpg().IMG_png().IMG_tif().IMG_webp(); }
+			
+			This&	IMG_jpg				() { M_img_flag ^= internal::IMG::IMG_INIT_JPG;		return *this; }
+			This&	IMG_png				() { M_img_flag ^= internal::IMG::IMG_INIT_PNG;		return *this; }
+			This&	IMG_tif				() { M_img_flag ^= internal::IMG::IMG_INIT_TIF;		return *this; }
+			This&	IMG_webp			() { M_img_flag ^= internal::IMG::IMG_INIT_WEBP;	return *this; }
+			
+			
+			
+			This&	TTF_enable			() { M_ttf_flag = !M_ttf_flag;						return *this; }
+			
+			private: internal::Uint32	M_sdl_flag = 0;
+			private: int				M_mix_flag = 0;
+			private: int				M_img_flag = 0;
+			private: bool				M_ttf_flag = 0;
+		};
 		
-		public:
-		~Subsystem()
+		public: constexpr
+		Subsystem() {}
+		
+		public: void init(FlagCtr const&)
 		{
-			internal::TTF::TTF_Quit();
-			internal::IMG::IMG_Quit();
-			internal::MIX::Mix_Quit();
-			internal::SDL_Quit();
+			
 		}
 		
-		public: void
-		init()
-		{
-			std::string error_msgs;
-			bool success = true;
-			auto append_err = [&](auto expected, auto got) constexpr {
-				error_msgs += "Expected '" + std::to_string(expected) + "', got '" + std::to_string(got) + "'. SDL Error Message:\n" + internal::SDL_GetError();
-			};
-			
-			if (M_sdl_flag != 0) {
-				auto ret = internal::SDL_Init(M_sdl_flag);
-				success = 0 == ret;
-				append_err(0, ret);
-			}
-			
-			if (M_mix_flag != 0) {
-				auto ret = internal::MIX::Mix_Init(M_mix_flag);
-				success = M_mix_flag == ret;
-				append_err(M_mix_flag, ret);
-			}
-			
-			if (M_img_flag != 0) {
-				auto ret = internal::IMG::IMG_Init(M_img_flag);
-				success = M_img_flag == ret;
-				append_err(M_img_flag, ret);
-			}
-			
-			if (M_ttf_flag) {
-				auto ret = internal::TTF::TTF_Init();
-				success = 0 == ret;
-				append_err(0, ret);
-			}
-			
-			if (!success) {
-				perror(error_msgs.c_str());
-				throw;
-			}
-			
-		}
-		
-		
-		
-		// Toggles everything. Only recommended to be used alone, or as the first in the chain, as it toggles everything.
-		public: auto&
-		toggle_all()&
-		{
-			return	 SDL_everything()
-					.IMG_everything()
-					.MIX_everything()
-					.TTF_toggle()
-			;
-		}
-		
-		
-		
-		public: Subsystem&
-		TTF_toggle()&
-		{ M_ttf_flag = !M_ttf_flag; return *this; }
-		
-		
-		
-		public: Subsystem&
-		IMG_everything()&
-		{ return IMG_JPG().IMG_PNG().IMG_TIF().IMG_WEBP(); }
-		
-		public: Subsystem&
-		IMG_JPG()&
-		{ toggleIMG(internal::IMG::IMG_INIT_JPG); return *this; }
-		
-		public: Subsystem&
-		IMG_PNG()&
-		{ toggleIMG(internal::IMG::IMG_INIT_PNG); return *this; }
-		
-		public: Subsystem&
-		IMG_TIF()&
-		{ toggleIMG(internal::IMG::IMG_INIT_TIF); return *this; }
-		
-		public: Subsystem&
-		IMG_WEBP()&
-		{ toggleIMG(internal::IMG::IMG_INIT_WEBP); return *this; }
-		
-		
-		
-		public: Subsystem&
-		MIX_everything()&
-		{ return MIX_FLAC().MIX_MOD().MIX_MP3().MIX_OGG().MIX_MID().MIX_OPUS(); }
-		
-		public: Subsystem&
-		MIX_FLAC()&
-		{ return toggleMIX(internal::MIX::MIX_INIT_FLAC); }
-		
-		public: Subsystem&
-		MIX_MOD()&
-		{ return toggleMIX(internal::MIX::MIX_INIT_MOD); }
-		
-		public: Subsystem&
-		MIX_MP3()&
-		{ return toggleMIX(internal::MIX::MIX_INIT_MP3); }
-		
-		public: Subsystem&
-		MIX_OGG()&
-		{ return toggleMIX(internal::MIX::MIX_INIT_OGG); }
-		
-		public: Subsystem&
-		MIX_MID()&
-		{ return toggleMIX(internal::MIX::MIX_INIT_MID); }
-		
-		public: Subsystem&
-		MIX_OPUS()&
-		{ return toggleMIX(internal::MIX::MIX_INIT_OPUS); }
-		
-		
-		
-		public: Subsystem&
-		SDL_everything()&
-		{ return toggleSDL(internal::INIT_EVERYTHING); }
-		
-		public: Subsystem&
-		SDL_timer()&
-		{ return toggleSDL(internal::INIT_TIMER); }
-		
-		public: Subsystem&
-		SDL_audio()&
-		{ return toggleSDL(internal::INIT_AUDIO); }
-		
-		public: Subsystem&
-		SDL_video()&
-		{ return toggleSDL(internal::INIT_VIDEO); }
-		
-		public: Subsystem&
-		SDL_joystick()&
-		{ return toggleSDL(internal::INIT_JOYSTICK); }
-		
-		public: Subsystem&
-		SDL_haptic()&
-		{ return toggleSDL(internal::INIT_HAPTIC); }
-		
-		public: Subsystem&
-		SDL_gamecontroller()&
-		{ return toggleSDL(internal::INIT_GAMECONTROLLER); }
-		
-		public: Subsystem&
-		SDL_events()&
-		{ return toggleSDL(internal::INIT_EVENTS); }
-		
-		public: Subsystem&
-		SDL_sensor()&
-		{ return toggleSDL(internal::INIT_SENSOR); }
-		
-		public: Subsystem&
-		SDL_noparachute()&
-		{ return toggleSDL(internal::INIT_NOPARACHUTE); }
-		
-		
-		
-		private: flagT M_sdl_flag = 0;
-		Subsystem& toggleSDL(flagT flag)
-		{ M_sdl_flag ^= flag; return *this; }
-		
-		private: int M_mix_flag = 0;
-		Subsystem& toggleMIX(int flag)
-		{ M_mix_flag ^= flag; return *this; }
-		
-		private: int M_img_flag = 0;
-		Subsystem& toggleIMG(int flag)
-		{ M_img_flag ^= flag; return *this; }
-		
-		private: bool M_ttf_flag = false;
+		private: bool
+			sdl = false,
+			mix = false,
+			img = false,
+			ttf = false
+		;
 		
 	};
 	
