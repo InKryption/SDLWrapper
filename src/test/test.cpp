@@ -9,7 +9,12 @@
 int main() {
 	using namespace ink::SDL::internal;
 	
-	ink::SDL::Subsystem _subsys;
+	ink::SDL::Subsystem subsys;
+	subsys
+		.SDL_everything()
+		
+		.init()
+	;
 	
 	SDL_Init(INIT_EVERYTHING);
 	
