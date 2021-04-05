@@ -20,8 +20,6 @@ int main() {
 	SDL::Frame frame; // Allows for safe forward declaration.
 	frame = SDL::Frame("Title", 100, 100, SDL::Frame::FlagCtr{}.RESIZABLE());
 	
-	//auto wnd = SDL_CreateWindow("", 100, 100, 100, 100, SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_RESIZABLE);
-	
 	bool running = true;
 	
 	while (running) {
@@ -31,6 +29,8 @@ int main() {
 				running = false;
 			break;
 		}
+		
+		
 		
 	}
 	

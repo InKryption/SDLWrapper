@@ -5,8 +5,11 @@
 
 namespace ink::SDL {
 	
-	//template<bool Shaped = false>
+	template<bool Shaped = false>
 	class Frame {
+		
+		public: static constexpr bool
+		IS_SHAPED = Shaped;
 		
 		// Functional Flag Constructor Structure. Each function toggles the window/renderer flag of the same name,
 		// and returns a reference to the structure, allowing for chaining functions.
@@ -96,25 +99,21 @@ namespace ink::SDL {
 		
 		
 		
-		public: 
-		
-		
-		
 		private: struct impl {
 			
 			internal::SDL_Event evt{};
 			internal::SDL_Window* wnd{nullptr};
 			internal::SDL_Renderer* rnd{nullptr};
-			
+			internal::SDL_WindowFlags f;
 			void init(	char const* title,
 						int x, int y, int w, int h,
 						ink::SDL::internal::Uint32 wnd_flags,
 						int render_driver,
 						ink::SDL::internal::Uint32 rnd_flags) {
 				
-				evt = internal::SDL_Event{};
-				wnd = internal::SDL_CreateWindow(title, x, y, w, h, wnd_flags);
+				wnd = (IS_SHAPED) ? internal::SDL_CreateShapedWindow(title, x, y, w, h, wnd_flags) : internal::SDL_CreateWindow(title, x, y, w, h, wnd_flags);
 				rnd = internal::SDL_CreateRenderer(wnd, render_driver, rnd_flags);
+				evt = internal::SDL_Event{};
 				
 			}
 			
@@ -126,8 +125,6 @@ namespace ink::SDL {
 		}* M_data{nullptr};
 		
 	};
-	
-	//using ShapedFrame = Frame<true>;
 	
 }
 
