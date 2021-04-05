@@ -31,8 +31,6 @@ namespace ink::SDL {
 		internal::Uint32 wnd_flag{0}, rnd_flag{0};
 	};
 	
-	using FlagCtr_Frame = FlagCtr<Frame>;
-	
 	class Frame {
 		
 		public: constexpr
@@ -43,7 +41,7 @@ namespace ink::SDL {
 		Frame(Frame const&) = delete;
 		
 		public: [[nodiscard]]
-		Frame(std::string_view title, int w, int h, FlagCtr_Frame const& flag_struct, int x = internal::WINDOWPOS_UNDEFINED, int y = internal::WINDOWPOS_UNDEFINED, int render_driver = -1)
+		Frame(std::string_view title, int w, int h, FlagCtr<SDL::Frame> const& flag_struct, int x = internal::WINDOWPOS_UNDEFINED, int y = internal::WINDOWPOS_UNDEFINED, int render_driver = -1)
 		{
 			( M_data = new impl{} )
 				->init(title.cbegin(), x, y, w, h, flag_struct.wnd_flag, render_driver, flag_struct.rnd_flag);
