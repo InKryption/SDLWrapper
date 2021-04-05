@@ -1,19 +1,12 @@
 
 #include <thread>
 #include <stdio.h>
-#include <type_traits>
-#include <cstring>
-#include <vector>
 
 #define SDL_MAIN_HANDLED
 #include "SDLWrapper.hpp"
 
-namespace SDL = ink::SDL;
-
 int main() {
-	
-	
-	
+	namespace SDL = ink::SDL;
 	
 	auto subsys = ink::SDL::Subsystem<>{}
 		.SDL_everything()
@@ -23,13 +16,6 @@ int main() {
 	frame = SDL::Frame("Title", 1440, 810, SDL::FlagCtr<SDL::Frame>{}.RESIZABLE());
 	
 	bool running = true;
-	
-	std::vector<SDL::Point<int>> pArr = {
-		{1,2},
-		{300,400},
-		{20,30}
-	};
-	
 	while (running) {
 		
 		while (frame.poll_events()) switch(frame.event().type) {
@@ -38,7 +24,7 @@ int main() {
 			break;
 		}
 		
-		frame.DrawClear(SDL::RGB_Preset::CYAN);
+		frame.DrawClear(SDL::RGB_Preset::WHITE);
 		
 		frame.DrawUpdate();
 		

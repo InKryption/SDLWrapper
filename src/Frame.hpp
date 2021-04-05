@@ -145,6 +145,10 @@ namespace ink::SDL {
 		
 		
 		
+		public: 
+		
+		
+		
 		public: auto
 		DrawUpdate()
 		{ return internal::SDL_RenderPresent(renderer()); }

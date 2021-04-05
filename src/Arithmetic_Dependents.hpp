@@ -65,8 +65,46 @@ namespace ink::SDL {
 		
 	}
 	
-	using detail::Point;
-	using detail::Rect;
+	template<detail::arithmetic T> struct Point: public detail::Point<T> {
+		
+		public: using
+		type = detail::Point<T>;
+		
+		public: constexpr
+		Point():
+		type{0, 0} {}
+		
+		public: constexpr
+		Point(T x, T y):
+		type{x, y} {}
+		
+		public: constexpr
+		Point(Point const& p):
+		type{p.x, p.y} {}
+		
+		public: constexpr
+		Point(type const& p):
+		type{p.x, p.y} {}
+		
+		public: template<typename P_Like> requires requires(P_Like pL) {
+			{ get<0>(pL) } -> std::convertible_to<T>;
+			{ get<1>(pL) } -> std::convertible_to<T>;
+		} constexpr
+		Point(P_Like const& pL):
+		type{get<0>(pL), get<1>(pL)} {}
+		
+		public: template<typename P_Like> requires requires(P_Like pL) {
+			{ pL.x } -> std::convertible_to<T>;
+			{ pL.y } -> std::convertible_to<T>;
+		} constexpr
+		Point(P_Like const& pL):
+		type{pL.x, pL.y} {}
+		
+	};
+	
+	template<detail::arithmetic T> struct Rect: public detail::Rect<T> {
+		
+	};
 	
 }
 
