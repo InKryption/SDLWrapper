@@ -162,7 +162,7 @@ namespace ink::SDL {
 			return Subsystem<sdl_flag, mix_flag, img_flag, ttf_flag, true>();
 		}
 		
-		private: static auto
+		protected: static auto
 		deinit()
 		{
 			if constexpr(owning) {
