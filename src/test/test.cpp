@@ -13,6 +13,8 @@ int main() {
 		.IMG_png()
 	.init();
 	
+	decltype(subsys) test;
+	
 	SDL::Frame frame{"Title", 1440, 810,
 		SDL::FlagCtr<SDL::Frame>{}
 	};
