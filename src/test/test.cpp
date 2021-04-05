@@ -38,7 +38,9 @@ int main() {
 			break;
 		}
 		
-		SDL::internal::SDL_SetRenderDrawColor(frame.renderer());
+		frame.DrawClear(SDL::RGB_Preset::CYAN);
+		
+		frame.DrawUpdate();
 		
 	}
 	

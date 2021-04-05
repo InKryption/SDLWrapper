@@ -2,6 +2,7 @@
 #define INK_SDLWRAPPER_FRAME_WINDOW_RENDERER_WRAPPER_CLASS_HEADER_FILE_GUARD
 
 #include <span>
+#include <string_view>
 #include "SDLWrapper.hpp"
 
 namespace ink::SDL {
@@ -27,7 +28,7 @@ namespace ink::SDL {
 		constexpr FlagCtr& PRESENTVSYNC		()	{ rnd_flag ^= internal::SDL_RENDERER_PRESENTVSYNC;	return *this; }
 		constexpr FlagCtr& TARGETTEXTURE	()	{ rnd_flag ^= internal::SDL_RENDERER_TARGETTEXTURE;	return *this; }
 		
-		uint32_t wnd_flag{0}, rnd_flag{0};
+		internal::Uint32 wnd_flag{0}, rnd_flag{0};
 	};
 	
 	using FlagCtr_Frame = FlagCtr<Frame>;
@@ -97,8 +98,28 @@ namespace ink::SDL {
 		
 		
 		public: auto
+		DrawClear()
+		{ return internal::SDL_RenderClear(renderer()); }
+		
+		public: auto
 		DrawClear(internal::Uint8 r, internal::Uint8 g, internal::Uint8 b, internal::Uint8 a = 255)
-		{ return internal::SDL_SetRenderDrawColor(renderer(), ); }
+		{ return DrawColor(r, g, b, a) & DrawClear(); }
+		
+		public: auto
+		DrawClear(RGBA rgba)
+		{ return DrawColor(rgba) & DrawClear(); }
+		
+		
+		
+		public: int
+		DrawColor(internal::Uint8 r, internal::Uint8 g, internal::Uint8 b, internal::Uint8 a = 255)
+		{ return internal::SDL_SetRenderDrawColor(renderer(), r, g, b, a); }
+		
+		public: int
+		DrawColor(RGBA rgba)
+		{ return DrawColor(rgba.r, rgba.g, rgba.b, rgba.a); }
+		
+		
 		
 		public: template<detail::arithmetic T> auto
 		DrawPoint(T x, T y)
@@ -123,6 +144,12 @@ namespace ink::SDL {
 		public: template<detail::arithmetic T> auto
 		DrawRects(std::span<Rect<T>> rects)
 		{ return detail::geometry_impl<T>::RenderDrawRects(renderer(), &*rects.begin(), rects.size()); }
+		
+		
+		
+		public: auto
+		DrawUpdate()
+		{ return internal::SDL_RenderPresent(renderer()); }
 		
 		
 		
