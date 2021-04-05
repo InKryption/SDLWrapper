@@ -10,7 +10,7 @@ int main() {
 	
 	auto subsys = ink::SDL::Subsystem<>{}
 		.SDL_everything()
-		.init();
+	.init();
 	
 	SDL::Frame frame; // Allows for safe forward declaration.
 	frame = SDL::Frame("Title", 1440, 810, SDL::FlagCtr<SDL::Frame>{}.RESIZABLE());

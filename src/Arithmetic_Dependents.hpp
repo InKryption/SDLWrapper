@@ -65,7 +65,10 @@ namespace ink::SDL {
 		
 	}
 	
-	template<detail::arithmetic T> struct Point: public detail::Point<T> {
+	// Generic implementation of an XY point that is constructible from any pair-like or XY Point-like structure.
+	// e.g. std::tuple<int, float>, std::pair<double, int>, struct Vec { int x; int y; }, etc.
+	template<detail::arithmetic T>
+	struct Point: public detail::Point<T> {
 		
 		public: using
 		type = detail::Point<T>;
@@ -87,18 +90,22 @@ namespace ink::SDL {
 		type{p.x, p.y} {}
 		
 		public: template<typename P_Like> requires requires(P_Like pL) {
-			{ get<0>(pL) } -> std::convertible_to<T>;
-			{ get<1>(pL) } -> std::convertible_to<T>;
-		} constexpr
-		Point(P_Like const& pL):
-		type{get<0>(pL), get<1>(pL)} {}
-		
-		public: template<typename P_Like> requires requires(P_Like pL) {
 			{ pL.x } -> std::convertible_to<T>;
 			{ pL.y } -> std::convertible_to<T>;
 		} constexpr
 		Point(P_Like const& pL):
 		type{pL.x, pL.y} {}
+		
+		public: template<typename P_Like> requires requires(P_Like pL) {
+			{ get<0>(pL) } -> std::convertible_to<T>;
+			{ get<1>(pL) } -> std::convertible_to<T>;
+		}
+		|| requires requires(P_Like pL) {
+			{ pL.x } -> std::convertible_to<T>;
+			{ pL.y } -> std::convertible_to<T>;
+		} constexpr
+		Point(P_Like const& pL):
+		type{get<0>(pL), get<1>(pL)} {}
 		
 	};
 	
