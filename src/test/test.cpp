@@ -10,10 +10,16 @@ int main() {
 	
 	auto subsys = ink::SDL::Subsystem<>{}
 		.SDL_everything()
+		.IMG_png()
 	.init();
 	
-	SDL::Frame frame; // Allows for safe forward declaration.
-	frame = SDL::Frame("Title", 1440, 810, SDL::FlagCtr<SDL::Frame>{}.RESIZABLE());
+	SDL::Frame frame{"Title", 1440, 810,
+		SDL::FlagCtr<SDL::Frame>{}
+			.RESIZABLE()
+	};
+	
+	auto tex = SDL::internal::IMG::IMG_LoadTexture(frame.renderer(), "assets/Menu/Title.png");
+	puts(SDL::internal::SDL_GetError());
 	
 	bool running = true;
 	while (running) {
@@ -25,6 +31,8 @@ int main() {
 		}
 		
 		frame.DrawClear(SDL::RGB_Preset::WHITE);
+		
+		SDL::internal::SDL_RenderCopy(frame.renderer(), tex, nullptr, nullptr);
 		
 		frame.DrawUpdate();
 		
