@@ -16,7 +16,7 @@ namespace SDL = ink::SDL;
 int main() {
 	using namespace SDL::internal;
 	
-	auto subsys = SDL::Subsystem()
+	auto subsys = ink::SDL::Subsystem<>{}
 		.SDL_everything()
 		.IMG_png()
 		.init();
@@ -32,7 +32,6 @@ int main() {
 				running = false;
 			break;
 		}
-		
 	}
 	
 	SDL_DestroyWindow(wnd);
