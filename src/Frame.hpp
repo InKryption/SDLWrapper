@@ -1,6 +1,7 @@
 #ifndef INK_SDLWRAPPER_FRAME_WINDOW_RENDERER_WRAPPER_CLASS_HEADER_FILE_GUARD
 #define INK_SDLWRAPPER_FRAME_WINDOW_RENDERER_WRAPPER_CLASS_HEADER_FILE_GUARD
 
+#include <span>
 #include "SDLWrapper.hpp"
 
 namespace ink::SDL {
@@ -92,6 +93,36 @@ namespace ink::SDL {
 		poll_events() {
 			return internal::SDL_PollEvent( &M_data->evt ) != 0;
 		}
+		
+		
+		
+		public: auto
+		DrawClear(internal::Uint8 r, internal::Uint8 g, internal::Uint8 b, internal::Uint8 a = 255)
+		{ return internal::SDL_SetRenderDrawColor(renderer(), ); }
+		
+		public: template<detail::arithmetic T> auto
+		DrawPoint(T x, T y)
+		{ return detail::geometry_impl<T>::RenderDrawPoint(renderer(), x, y); }
+		
+		public: template<detail::arithmetic T> int
+		DrawPoints(std::span<Point<T>> points)
+		{ return detail::geometry_impl<T>::RenderDrawPoints(renderer(), &*points.begin(), points.size()); }
+		
+		public: template<detail::arithmetic T> auto
+		DrawLine(T x1, T y1, T x2, T y2)
+		{ return detail::geometry_impl<T>::RenderDrawLine(renderer(), x1, y1, x2, y2); }
+		
+		public: template<detail::arithmetic T> auto
+		DrawLines(std::span<Point<T>> points)
+		{ return detail::geometry_impl<T>::RenderDrawLines(renderer(), &*points.begin(), points.size()); }
+		
+		public: template<detail::arithmetic T> auto
+		DrawRect(T x, T y, T w, T h)
+		{ Rect<T> rect; return detail::geometry_impl<T>::RenderDrawRect(renderer(), &rect); }
+		
+		public: template<detail::arithmetic T> auto
+		DrawRects(std::span<Rect<T>> rects)
+		{ return detail::geometry_impl<T>::RenderDrawRects(renderer(), &*rects.begin(), rects.size()); }
 		
 		
 		

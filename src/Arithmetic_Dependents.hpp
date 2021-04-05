@@ -65,6 +65,9 @@ namespace ink::SDL {
 		
 	}
 	
+	using detail::Point;
+	using detail::Rect;
+	
 }
 
 #endif

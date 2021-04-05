@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <type_traits>
 #include <cstring>
+#include <vector>
 
 #define SDL_MAIN_HANDLED
 #include "SDLWrapper.hpp"
@@ -10,27 +11,34 @@
 namespace SDL = ink::SDL;
 
 int main() {
-	using namespace SDL::internal;
+	
+	
+	
 	
 	auto subsys = ink::SDL::Subsystem<>{}
 		.SDL_everything()
-		.IMG_png()
 		.init();
 	
 	SDL::Frame frame; // Allows for safe forward declaration.
-	frame = SDL::Frame("Title", 100, 100, SDL::FlagCtr<SDL::Frame>{}.RESIZABLE());
+	frame = SDL::Frame("Title", 1440, 810, SDL::FlagCtr<SDL::Frame>{}.RESIZABLE());
 	
 	bool running = true;
+	
+	std::vector<SDL::Point<int>> pArr = {
+		{1,2},
+		{300,400},
+		{20,30}
+	};
 	
 	while (running) {
 		
 		while (frame.poll_events()) switch(frame.event().type) {
-			case SDL_QUIT:
+			case SDL::internal::SDL_QUIT:
 				running = false;
 			break;
 		}
 		
-		
+		SDL::internal::SDL_SetRenderDrawColor(frame.renderer());
 		
 	}
 	
