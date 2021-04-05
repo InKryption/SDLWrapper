@@ -6,10 +6,20 @@
 #define SDL_MAIN_HANDLED
 #include "SDLWrapper.hpp"
 
+template<typename T> struct rtup_impl;
+template<typename T> static constexpr auto rtup = rtup_impl<T>::value;
+
+template<template<auto...> typename T, auto... v> struct rtup_impl<T<v...>> { static constexpr auto value = std::make_tuple(v...); };
+
+namespace SDL = ink::SDL;
+
 int main() {
-	using namespace ink::SDL::internal;
+	using namespace SDL::internal;
 	
-	auto subsys = ink::SDL::Subsystem();
+	auto subsys = SDL::Subsystem()
+		.SDL_everything()
+		.IMG_png()
+		.init();
 	
 	auto wnd = SDL_CreateWindow("", 100, 100, 100, 100, SDL_WINDOW_ALLOW_HIGHDPI | SDL_WINDOW_RESIZABLE);
 	
@@ -26,8 +36,6 @@ int main() {
 	}
 	
 	SDL_DestroyWindow(wnd);
-	
-	
 	
 	return 0;
 }
