@@ -18,7 +18,7 @@ int main() {
 		.init();
 	
 	SDL::Frame frame; // Allows for safe forward declaration.
-	frame = SDL::Frame("Title", 100, 100, SDL::FlagCtr_Frame<>{}.RESIZABLE());
+	frame = SDL::Frame("Title", 100, 100, SDL::FlagCtr<SDL::Frame>{}.RESIZABLE());
 	
 	bool running = true;
 	

@@ -5,8 +5,8 @@
 
 namespace ink::SDL {
 	
-	template<bool> class Frame;
-	template<bool B> struct FlagCtr<Frame<B>> {
+	class Frame;
+	template<> struct FlagCtr<Frame> {
 		constexpr FlagCtr() {}
 		
 		constexpr FlagCtr& FULLSCREEN		()	{ wnd_flag ^= internal::SDL_WINDOW_FULLSCREEN;		return *this; }
@@ -29,14 +29,9 @@ namespace ink::SDL {
 		uint32_t wnd_flag{0}, rnd_flag{0};
 	};
 	
-	template<bool B = false> using
-	FlagCtr_Frame = FlagCtr<Frame<B>>;
+	using FlagCtr_Frame = FlagCtr<Frame>;
 	
-	template<bool Shaped = false>
 	class Frame {
-		
-		public: static constexpr bool
-		IS_SHAPED = Shaped;
 		
 		public: constexpr
 		Frame()
@@ -46,7 +41,7 @@ namespace ink::SDL {
 		Frame(Frame const&) = delete;
 		
 		public: [[nodiscard]]
-		Frame(std::string_view title, int w, int h, FlagCtr_Frame<IS_SHAPED> const& flag_struct, int x = internal::WINDOWPOS_UNDEFINED, int y = internal::WINDOWPOS_UNDEFINED, int render_driver = -1)
+		Frame(std::string_view title, int w, int h, FlagCtr_Frame const& flag_struct, int x = internal::WINDOWPOS_UNDEFINED, int y = internal::WINDOWPOS_UNDEFINED, int render_driver = -1)
 		{
 			( M_data = new impl{} )
 				->init(title.cbegin(), x, y, w, h, flag_struct.wnd_flag, render_driver, flag_struct.rnd_flag);
@@ -112,7 +107,7 @@ namespace ink::SDL {
 						int render_driver,
 						ink::SDL::internal::Uint32 rnd_flags) {
 				
-				wnd = (IS_SHAPED) ? internal::SDL_CreateShapedWindow(title, x, y, w, h, wnd_flags) : internal::SDL_CreateWindow(title, x, y, w, h, wnd_flags);
+				wnd = internal::SDL_CreateWindow(title, x, y, w, h, wnd_flags);
 				rnd = internal::SDL_CreateRenderer(wnd, render_driver, rnd_flags);
 				evt = internal::SDL_Event{};
 				
@@ -126,8 +121,6 @@ namespace ink::SDL {
 		}* M_data{nullptr};
 		
 	};
-	
-	using ShapedFrame = Frame<true>;
 	
 }
 
