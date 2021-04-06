@@ -13,9 +13,7 @@ int main() {
 		.IMG_png()
 	.init();
 	
-	SDL::Frame frame;
-	
-	frame = {"Title", 1440, 810,
+	SDL::Frame frame{"Title", 1440, 810,
 		frame.MakeFlags()
 			.ACCELERATED()
 			.RESIZABLE(),

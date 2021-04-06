@@ -6,6 +6,7 @@
 #include "Color.hpp"
 #include "Subsystem.hpp"
 #include "Arithmetic_Dependents.hpp"
+#include "Mixer.hpp"
 #include "Frame.hpp"
 
 #endif
