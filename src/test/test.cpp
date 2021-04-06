@@ -13,8 +13,12 @@ int main() {
 		.IMG_png()
 	.init();
 	
-	SDL::Frame frame{"Title", 1440, 810,
-		SDL::FlagCtr<SDL::Frame>{}
+	SDL::Frame frame;
+	
+	frame = {"Title", 1440, 810,
+		frame.MakeFlags()
+			.ACCELERATED()
+			.RESIZABLE()
 	};
 	
 	auto tex = SDL::internal::IMG::IMG_LoadTexture(frame.renderer(), "assets/Menu/Title.png");

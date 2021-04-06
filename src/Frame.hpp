@@ -7,31 +7,35 @@
 
 namespace ink::SDL {
 	
-	class Frame;
-	template<> struct FlagCtr<Frame> {
-		constexpr FlagCtr() {}
-		
-		constexpr FlagCtr& FULLSCREEN		()	{ wnd_flag ^= internal::SDL_WINDOW_FULLSCREEN;		return *this; }
-		constexpr FlagCtr& OPENGL			()	{ wnd_flag ^= internal::SDL_WINDOW_OPENGL;			return *this; }
-		constexpr FlagCtr& HIDDEN			()	{ wnd_flag ^= internal::SDL_WINDOW_HIDDEN;			return *this; }
-		constexpr FlagCtr& BORDERLESS		()	{ wnd_flag ^= internal::SDL_WINDOW_BORDERLESS;		return *this; }
-		constexpr FlagCtr& RESIZABLE		()	{ wnd_flag ^= internal::SDL_WINDOW_RESIZABLE;		return *this; }
-		constexpr FlagCtr& MAXIMIZED		()	{ wnd_flag ^= internal::SDL_WINDOW_MAXIMIZED;		return *this; }
-		constexpr FlagCtr& MINIMIZED		()	{ wnd_flag ^= internal::SDL_WINDOW_MINIMIZED;		return *this; }
-		constexpr FlagCtr& INPUT_GRABBED	()	{ wnd_flag ^= internal::SDL_WINDOW_INPUT_GRABBED;	return *this; }
-		constexpr FlagCtr& ALLOW_HIGHDPI	()	{ wnd_flag ^= internal::SDL_WINDOW_ALLOW_HIGHDPI;	return *this; }
-		constexpr FlagCtr& VULKAN			()	{ wnd_flag ^= internal::SDL_WINDOW_VULKAN;			return *this; }
-		constexpr FlagCtr& METAL			()	{ wnd_flag ^= internal::SDL_WINDOW_METAL;			return *this; }
-		
-		constexpr FlagCtr& SOFTWARE			()	{ rnd_flag ^= internal::SDL_RENDERER_SOFTWARE;		return *this; }
-		constexpr FlagCtr& ACCELERATED		()	{ rnd_flag ^= internal::SDL_RENDERER_ACCELERATED;	return *this; }
-		constexpr FlagCtr& PRESENTVSYNC		()	{ rnd_flag ^= internal::SDL_RENDERER_PRESENTVSYNC;	return *this; }
-		constexpr FlagCtr& TARGETTEXTURE	()	{ rnd_flag ^= internal::SDL_RENDERER_TARGETTEXTURE;	return *this; }
-		
-		internal::Uint32 wnd_flag{0}, rnd_flag{0};
-	};
-	
 	class Frame {
+		
+		private: template<internal::Uint32 wnd, internal::Uint32 rnd>
+		struct FlagCtr {
+					
+			constexpr auto FULLSCREEN		()	{ return FlagCtr<	wnd	^	internal::SDL_WINDOW_FULLSCREEN			,	rnd		>(); }
+			constexpr auto OPENGL			()	{ return FlagCtr<	wnd	^	internal::SDL_WINDOW_OPENGL				,	rnd		>(); }
+			constexpr auto HIDDEN			()	{ return FlagCtr<	wnd	^	internal::SDL_WINDOW_HIDDEN				,	rnd		>(); }
+			constexpr auto BORDERLESS		()	{ return FlagCtr<	wnd	^	internal::SDL_WINDOW_BORDERLESS			,	rnd		>(); }
+			constexpr auto RESIZABLE		()	{ return FlagCtr<	wnd	^	internal::SDL_WINDOW_RESIZABLE			,	rnd		>(); }
+			constexpr auto MAXIMIZED		()	{ return FlagCtr<	wnd	^	internal::SDL_WINDOW_MAXIMIZED			,	rnd		>(); }
+			constexpr auto MINIMIZED		()	{ return FlagCtr<	wnd	^	internal::SDL_WINDOW_MINIMIZED			,	rnd		>(); }
+			constexpr auto INPUT_GRABBED	()	{ return FlagCtr<	wnd	^	internal::SDL_WINDOW_INPUT_GRABBED		,	rnd		>(); }
+			constexpr auto ALLOW_HIGHDPI	()	{ return FlagCtr<	wnd	^	internal::SDL_WINDOW_ALLOW_HIGHDPI		,	rnd		>(); }
+			constexpr auto VULKAN			()	{ return FlagCtr<	wnd	^	internal::SDL_WINDOW_VULKAN				,	rnd		>(); }
+			constexpr auto METAL			()	{ return FlagCtr<	wnd	^	internal::SDL_WINDOW_METAL				,	rnd		>(); }
+					
+			constexpr auto SOFTWARE			()	{ return FlagCtr<	wnd	,	internal::SDL_RENDERER_SOFTWARE			^	rnd		>(); }
+			constexpr auto ACCELERATED		()	{ return FlagCtr<	wnd	,	internal::SDL_RENDERER_ACCELERATED		^	rnd		>(); }
+			constexpr auto PRESENTVSYNC		()	{ return FlagCtr<	wnd	,	internal::SDL_RENDERER_PRESENTVSYNC		^	rnd		>(); }
+			constexpr auto TARGETTEXTURE	()	{ return FlagCtr<	wnd	,	internal::SDL_RENDERER_TARGETTEXTURE	^	rnd		>(); }
+			
+		};
+		
+		// Return base template for creating window flags. Each function of this object returns an appropriately configured "Flag Struct",
+		// which can be passed to the Frame constructor to set said flags, allowing for chaining of functions. e.g. "SDL::Frame::MakeFlags().ACCELERATED().RESIZABLE()"
+		public: static constexpr auto
+		MakeFlags()
+		{ return FlagCtr<0,0>(); }
 		
 		public: constexpr
 		Frame()
@@ -40,11 +44,12 @@ namespace ink::SDL {
 		public:
 		Frame(Frame const&) = delete;
 		
-		public: [[nodiscard]]
-		Frame(std::string_view title, int w, int h, FlagCtr<SDL::Frame> const& flag_struct, int x = internal::WINDOWPOS_UNDEFINED, int y = internal::WINDOWPOS_UNDEFINED, int render_driver = -1)
+		// Construct flags with FlagCtr using the "SDL::Frame::MakeFlags()" static method.
+		public: template<internal::Uint32 wnd, internal::Uint32 rnd> [[nodiscard]] 
+		Frame(std::string_view title, int w, int h, [[maybe_unused]] FlagCtr<wnd, rnd> f = FlagCtr<0,0>(), int x = internal::WINDOWPOS_UNDEFINED, int y = internal::WINDOWPOS_UNDEFINED, int render_driver = -1)
 		{
 			( M_data = new impl{} )
-				->init(title.cbegin(), x, y, w, h, flag_struct.wnd_flag, render_driver, flag_struct.rnd_flag);
+				->init(title.cbegin(), x, y, w, h, wnd, render_driver, rnd);
 		}
 		
 		public:
