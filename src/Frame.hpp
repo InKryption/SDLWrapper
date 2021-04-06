@@ -7,42 +7,6 @@
 
 namespace ink::SDL {
 	
-	namespace detail {
-		
-		static constexpr struct ignore_impl {
-			
-			public: constexpr operator SDL::Rect<int>() const
-			{ return *static_cast<SDL::Rect<int>*>(nullptr); }
-			
-			public: constexpr operator SDL::Rect<float>() const
-			{ return *static_cast<SDL::Rect<float>*>(nullptr); }
-			
-			public: constexpr operator SDL::Point<int>() const
-			{ return *static_cast<SDL::Point<int>*>(nullptr); }
-			
-			public: constexpr operator SDL::Point<float>() const
-			{ return *static_cast<SDL::Point<float>*>(nullptr); }
-			
-			
-			
-			public: constexpr operator detail::Rect<int>() const
-			{ return *static_cast<detail::Rect<int>*>(nullptr); }
-			
-			public: constexpr operator detail::Rect<float>() const
-			{ return *static_cast<detail::Rect<float>*>(nullptr); }
-			
-			public: constexpr operator detail::Point<int>() const
-			{ return *static_cast<detail::Point<int>*>(nullptr); }
-			
-			public: constexpr operator detail::Point<float>() const
-			{ return *static_cast<detail::Point<float>*>(nullptr); }
-			
-		} ignore{};
-		
-	}
-	
-	using detail::ignore;
-	
 	class Frame {
 		
 		using Texture = internal::SDL_Texture*;
@@ -189,17 +153,41 @@ namespace ink::SDL {
 		
 		
 		
-		public: template<detail::arithmetic T> auto
-		DrawTexture(Texture const& tex)
-		{ return detail::geometry_impl<T>::RenderCopy(renderer(), tex, nullptr, nullptr); }
+		private: template<typename T>
+		struct optional_geometry {
+			
+			constexpr optional_geometry(T const& cref):
+			value(&cref) {}
+			
+			constexpr optional_geometry(std::nullptr_t null = nullptr):
+			value(null) {}
+			
+			T const* value = nullptr;
+		};
 		
-		public: template<detail::arithmetic T> auto
-		DrawTexture(Texture const& tex, Rect<T> const& dst, Rect<int> const& src = ignore)
-		{ return detail::geometry_impl<T>::RenderCopy(renderer(), tex, &src, &dst); }
+		private: template<detail::arithmetic T> using RECT = optional_geometry<Rect<T>>;
+		private: template<detail::arithmetic T> using POINT = optional_geometry<Point<T>>;
 		
+		/**
+		 * @param tex Texture to render.
+		 * @param dst Can safely be either constructed as an SDL::Rect, or as nullptr to ignore (defaults to texture { width , height }).
+		 * @param src Can safely be either constructed as an SDL::Rect, or as nullptr to ignore (defaults to frame { width , height }).
+		*/
 		public: template<detail::arithmetic T> auto
-		DrawTexture(Texture const& tex, Rect<T> const& dst, Rect<int> const& src, double angle, Point<T> const& center = ignore, Flip const& flip = Flip::SDL_FLIP_NONE)
-		{ return detail::geometry_impl<T>::RenderCopyEx(renderer(), tex, &src, &dst, angle, &center, flip); }
+		DrawTexture(Texture const& tex, RECT<T> const& dst = {}, RECT<int> const& src = {})
+		{ return detail::geometry_impl<T>::RenderCopy(renderer(), tex, src.value, dst.value); }
+		
+		/**
+		 * @param tex Texture to render.
+		 * @param dst Can safely be either constructed as an SDL::Rect, or as nullptr to ignore (defaults to frame		{ 0 , 0 , width , height }).
+		 * @param src Can safely be either constructed as an SDL::Rect, or as nullptr to ignore (defaults to texture	{ 0 , 0 , width , height }).
+		 * @param angle Angle of rotation at which the texture is rendered.
+		 * @param center Can safely be either constructed as an SDL::Rect, or as nullptr to ignore (defaults to { dst.w /2 , dst.h/2 }).
+		 * @param flip Flip state with which to render the texture.
+		*/
+		public: template<detail::arithmetic T> auto
+		DrawTexture(Texture const& tex, RECT<T> const& dst, RECT<int> const& src, double angle, POINT<T> const& center = {}, Flip const& flip = Flip::SDL_FLIP_NONE)
+		{ return detail::geometry_impl<T>::RenderCopyEx(renderer(), tex, src.value, dst.value, angle, &center, flip); }
 		
 		
 		

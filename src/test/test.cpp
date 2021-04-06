@@ -22,8 +22,6 @@ int main() {
 		
 	};
 	
-	SDL::detail::Rect<int> test = SDL::ignore;
-	
 	auto tex = SDL::internal::IMG::IMG_LoadTexture(frame.renderer(), "assets/Menu/Title.png");
 	
 	bool running = true;
@@ -36,7 +34,7 @@ int main() {
 		}
 		
 		frame.DrawClear(SDL::RGB_Preset::WHITE);
-		SDL::internal::SDL_RenderCopy(frame.renderer(), tex, nullptr, nullptr);
+		frame.DrawTexture<int>(tex, SDL::Rect{0, 0, 100, 100}, nullptr);
 		frame.DrawUpdate();
 	}
 	
