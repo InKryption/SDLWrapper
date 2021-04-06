@@ -18,8 +18,11 @@ int main() {
 	frame = {"Title", 1440, 810,
 		frame.MakeFlags()
 			.ACCELERATED()
-			.RESIZABLE()
+			.RESIZABLE(),
+		
 	};
+	
+	SDL::detail::Rect<int> test = SDL::ignore;
 	
 	auto tex = SDL::internal::IMG::IMG_LoadTexture(frame.renderer(), "assets/Menu/Title.png");
 	

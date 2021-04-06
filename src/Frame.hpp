@@ -7,7 +7,46 @@
 
 namespace ink::SDL {
 	
+	namespace detail {
+		
+		static constexpr struct ignore_impl {
+			
+			public: constexpr operator SDL::Rect<int>() const
+			{ return *static_cast<SDL::Rect<int>*>(nullptr); }
+			
+			public: constexpr operator SDL::Rect<float>() const
+			{ return *static_cast<SDL::Rect<float>*>(nullptr); }
+			
+			public: constexpr operator SDL::Point<int>() const
+			{ return *static_cast<SDL::Point<int>*>(nullptr); }
+			
+			public: constexpr operator SDL::Point<float>() const
+			{ return *static_cast<SDL::Point<float>*>(nullptr); }
+			
+			
+			
+			public: constexpr operator detail::Rect<int>() const
+			{ return *static_cast<detail::Rect<int>*>(nullptr); }
+			
+			public: constexpr operator detail::Rect<float>() const
+			{ return *static_cast<detail::Rect<float>*>(nullptr); }
+			
+			public: constexpr operator detail::Point<int>() const
+			{ return *static_cast<detail::Point<int>*>(nullptr); }
+			
+			public: constexpr operator detail::Point<float>() const
+			{ return *static_cast<detail::Point<float>*>(nullptr); }
+			
+		} ignore{};
+		
+	}
+	
+	using detail::ignore;
+	
 	class Frame {
+		
+		using Texture = internal::SDL_Texture*;
+		using Flip = internal::SDL_RendererFlip;
 		
 		private: template<internal::Uint32 wnd, internal::Uint32 rnd>
 		struct FlagCtr {
@@ -150,7 +189,17 @@ namespace ink::SDL {
 		
 		
 		
-		public: 
+		public: template<detail::arithmetic T> auto
+		DrawTexture(Texture const& tex)
+		{ return detail::geometry_impl<T>::RenderCopy(renderer(), tex, nullptr, nullptr); }
+		
+		public: template<detail::arithmetic T> auto
+		DrawTexture(Texture const& tex, Rect<T> const& dst, Rect<int> const& src = ignore)
+		{ return detail::geometry_impl<T>::RenderCopy(renderer(), tex, &src, &dst); }
+		
+		public: template<detail::arithmetic T> auto
+		DrawTexture(Texture const& tex, Rect<T> const& dst, Rect<int> const& src, double angle, Point<T> const& center = ignore, Flip const& flip = Flip::SDL_FLIP_NONE)
+		{ return detail::geometry_impl<T>::RenderCopyEx(renderer(), tex, &src, &dst, angle, &center, flip); }
 		
 		
 		
