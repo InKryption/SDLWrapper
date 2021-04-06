@@ -34,6 +34,8 @@ namespace ink::SDL {
 			
 		};
 		
+	/* START CONSTRUCTION */
+		
 		// Return base template for creating window flags. Each function of this object returns an appropriately configured "Flag Struct",
 		// which can be passed to the Frame constructor to set said flags, allowing for chaining of functions. e.g. "SDL::Frame::MakeFlags().ACCELERATED().RESIZABLE()"
 		public: static constexpr auto
@@ -73,7 +75,11 @@ namespace ink::SDL {
 			std::exit(EXIT_FAILURE);
 		}
 		
+	/* END CONSTRUCTION */
 		
+		
+		
+	/* START SDL-API */
 		
 		// Return a raw pointer to the SDL_Window
 		public: constexpr auto*
@@ -100,6 +106,8 @@ namespace ink::SDL {
 		poll_events() {
 			return internal::SDL_PollEvent( &M_data->evt ) != 0;
 		}
+		
+	/* END SDL-API */
 		
 		
 		
