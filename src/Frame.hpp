@@ -175,13 +175,19 @@ namespace ink::SDL {
 		private: template<typename T>
 		struct optional_geometry {
 			
-			constexpr optional_geometry(T const& cref):
+			public: constexpr
+			optional_geometry(T const& cref):
 			value(&cref) {}
 			
-			constexpr optional_geometry(std::nullptr_t null = nullptr):
+			public: constexpr
+			optional_geometry(std::nullptr_t null = nullptr):
 			value(null) {}
 			
+			public: constexpr
+			optional_geometry(int) = delete;
+			
 			T const* value = nullptr;
+			
 		};
 		
 		private: template<detail::arithmetic T> using RECT = optional_geometry<Rect<T>>;

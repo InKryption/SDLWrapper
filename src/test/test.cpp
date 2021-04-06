@@ -20,11 +20,7 @@ int main() {
 			.RESIZABLE(),
 	};
 	
-	SDL::Mixer mxr;
-	
-	auto tex = SDL::internal::IMG::IMG_LoadTexture(frame.renderer(), "assets/Menu/Title.png");
-	
-	
+	auto tex = frame.LoadTexture("assets/Menu/Title.png");
 	
 	bool running = true;
 	while (running) {
@@ -36,7 +32,7 @@ int main() {
 		}
 		
 		frame.DrawClear(SDL::RGB_Preset::WHITE);
-		frame.DrawTexture<int>(tex, SDL::Rect{0, 0, 100, 100}, nullptr);
+		frame.DrawTexture<int>(tex, nullptr, nullptr);
 		frame.DrawUpdate();
 		
 	}
