@@ -103,6 +103,8 @@ namespace ink::SDL {
 		
 		
 		
+	/* START DRAW FUNCTIONS */
+		
 		public: auto
 		DrawClear()
 		{ return internal::SDL_RenderClear(renderer()); }
@@ -132,7 +134,7 @@ namespace ink::SDL {
 		{ return detail::geometry_impl<T>::RenderDrawPoint(renderer(), x, y); }
 		
 		public: template<detail::arithmetic T> int
-		DrawPoints(std::span<Point<T>> points)
+		DrawPoint(std::span<Point<T>> points)
 		{ return detail::geometry_impl<T>::RenderDrawPoints(renderer(), &*points.begin(), points.size()); }
 		
 		public: template<detail::arithmetic T> auto
@@ -140,7 +142,7 @@ namespace ink::SDL {
 		{ return detail::geometry_impl<T>::RenderDrawLine(renderer(), x1, y1, x2, y2); }
 		
 		public: template<detail::arithmetic T> auto
-		DrawLines(std::span<Point<T>> points)
+		DrawLine(std::span<Point<T>> points)
 		{ return detail::geometry_impl<T>::RenderDrawLines(renderer(), &*points.begin(), points.size()); }
 		
 		public: template<detail::arithmetic T> auto
@@ -148,7 +150,7 @@ namespace ink::SDL {
 		{ Rect<T> rect; return detail::geometry_impl<T>::RenderDrawRect(renderer(), &rect); }
 		
 		public: template<detail::arithmetic T> auto
-		DrawRects(std::span<Rect<T>> rects)
+		DrawRect(std::span<Rect<T>> rects)
 		{ return detail::geometry_impl<T>::RenderDrawRects(renderer(), &*rects.begin(), rects.size()); }
 		
 		
@@ -194,6 +196,8 @@ namespace ink::SDL {
 		public: auto
 		DrawUpdate()
 		{ return internal::SDL_RenderPresent(renderer()); }
+		
+	/* END DRAW FUNCTIONS */
 		
 		
 		

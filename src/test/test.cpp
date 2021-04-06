@@ -36,6 +36,8 @@ int main() {
 		frame.DrawClear(SDL::RGB_Preset::WHITE);
 		frame.DrawTexture<int>(tex, SDL::Rect{0, 0, 100, 100}, nullptr);
 		frame.DrawUpdate();
+		
+		
 	}
 	
 	
