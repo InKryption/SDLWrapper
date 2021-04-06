@@ -128,8 +128,18 @@ namespace ink::SDL {
 		private: friend class
 		Subsystem<sdl_flag, mix_flag, img_flag, ttf_flag, false>;
 		
+		private: constexpr
+		Subsystem() {
+			owner_count++;
+		}
+		
 		public:
-		~Subsystem() { this->deinit(); }
+		~Subsystem() {
+			if (--owner_count == 0) { this->deinit(); }
+		}
+		
+		private: static inline size_t
+		owner_count = 0;
 		
 	};
 	
