@@ -8,11 +8,13 @@ namespace ink::SDL {
 	struct Mixer {
 		
 		public: explicit
-		Mixer(int frequency, internal::Uint16 format, int channels, int chunksize)
+		Mixer(	int frequency = internal::MIX::DEFAULT_FREQUENCY, internal::Uint16 format = internal::MIX::DEFAULT_FORMAT,
+				int channels = internal::MIX::DEFAULT_CHANNELS, int chunksize = 1024)
 		{ init(frequency, format, channels, chunksize); }
 		
 		public: explicit
-		Mixer(int frequency, internal::Uint16 format, int channels, int chunksize, char const* device, int allowed_changes)
+		Mixer(	int frequency, internal::Uint16 format,
+				int channels, int chunksize, char const* device, int allowed_changes)
 		{ init(frequency, format, channels, chunksize, device, allowed_changes); }
 		
 		public:
@@ -20,11 +22,13 @@ namespace ink::SDL {
 		{ deinit(); }
 		
 		public: static inline int
-		init(int frequency, internal::Uint16 format, int channels, int chunksize)
+		init(	int frequency, internal::Uint16 format,
+				int channels, int chunksize)
 		{ return internal::MIX::Mix_OpenAudio(frequency, format, channels, chunksize); }
 		
 		public: static inline int
-		init(int frequency, ink::SDL::internal::Uint16 format, int channels, int chunksize, char const* device, int allowed_changes)
+		init(	int frequency, internal::Uint16 format, int channels,
+				int chunksize, char const* device, int allowed_changes)
 		{ return internal::MIX::Mix_OpenAudioDevice(frequency, format, channels, chunksize, device, allowed_changes); }
 		
 		public: static inline void

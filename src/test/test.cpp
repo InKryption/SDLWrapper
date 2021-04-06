@@ -17,7 +17,6 @@ int main() {
 		frame.MakeFlags()
 			.ACCELERATED()
 			.RESIZABLE(),
-		
 	};
 	
 	auto tex = SDL::internal::IMG::IMG_LoadTexture(frame.renderer(), "assets/Menu/Title.png");

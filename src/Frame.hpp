@@ -65,8 +65,7 @@ namespace ink::SDL {
 		
 		// Move will throw if acting as assignment to already-initialized Frame.
 		public: void
-		operator=(Frame && rval) try
-		{
+		operator=(Frame && rval) try {
 			if (M_data != nullptr) throw "Encountered assignment to already-initiaized Frame object. Throwing intentionally.";
 			std::swap(M_data, rval.M_data);
 		}
@@ -108,6 +107,16 @@ namespace ink::SDL {
 		}
 		
 	/* END SDL-API */
+		
+		
+		
+	/* START TEXTURE CREATION */
+		
+		public: Texture
+		LoadTexture(std::string_view img_path)
+		{ return internal::IMG::IMG_LoadTexture(renderer(), img_path.cbegin()); }
+		
+	/* END TEXTURE CREATION */
 		
 		
 		
