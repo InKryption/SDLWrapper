@@ -11,6 +11,7 @@ int main() {
 	auto subsys = ink::SDL::Subsystem<>{}
 		.SDL_everything()
 		.IMG_png()
+		.MIX_mp3()
 	.init();
 	
 	SDL::Frame frame{"Title", 1440, 810,
@@ -19,7 +20,11 @@ int main() {
 			.RESIZABLE(),
 	};
 	
+	SDL::Mixer mxr;
+	
 	auto tex = SDL::internal::IMG::IMG_LoadTexture(frame.renderer(), "assets/Menu/Title.png");
+	
+	
 	
 	bool running = true;
 	while (running) {
@@ -33,7 +38,6 @@ int main() {
 		frame.DrawClear(SDL::RGB_Preset::WHITE);
 		frame.DrawTexture<int>(tex, SDL::Rect{0, 0, 100, 100}, nullptr);
 		frame.DrawUpdate();
-		
 		
 	}
 	

@@ -7,6 +7,8 @@ namespace ink::SDL {
 	
 	struct Mixer {
 		
+		public: using Music = internal::MIX::Mix_Music*;
+		
 		public: explicit
 		Mixer(	int frequency = internal::MIX::DEFAULT_FREQUENCY, internal::Uint16 format = internal::MIX::DEFAULT_FORMAT,
 				int channels = internal::MIX::DEFAULT_CHANNELS, int chunksize = 1024)
@@ -20,6 +22,14 @@ namespace ink::SDL {
 		public:
 		~Mixer()
 		{ deinit(); }
+		
+		
+		
+		public: static inline Music
+		LoadMusic(std::string_view audio_file_path)
+		{ return internal::MIX::Mix_LoadMUS(audio_file_path.cbegin()); }
+		
+		
 		
 		public: static inline int
 		init(	int frequency, internal::Uint16 format,
