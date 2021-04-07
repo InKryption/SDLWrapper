@@ -1,4 +1,0 @@
-DEFAULT_CONFIG:=MinGW-Debug
-
-NAME:=PROJECT
-SRC:=src
