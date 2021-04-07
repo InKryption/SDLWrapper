@@ -1,6 +1,7 @@
 #ifndef INK_SDLWRAPPER_MIXER_STRUCT_WRAPPER_CLASS_HEADER_FILE_GUARD
 #define INK_SDLWRAPPER_MIXER_STRUCT_WRAPPER_CLASS_HEADER_FILE_GUARD
 
+#include <string_view>
 #include "SDLWrapper.hpp"
 
 namespace ink::SDL {
