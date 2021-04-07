@@ -8,6 +8,7 @@ namespace ink::SDL {
 	struct Mixer {
 		
 		public: using Music = internal::MIX::Mix_Music*;
+		public: using Chunk = internal::MIX::Mix_Chunk*;
 		
 		public: explicit
 		Mixer(	int frequency = internal::MIX::DEFAULT_FREQUENCY, internal::Uint16 format = internal::MIX::DEFAULT_FORMAT,
@@ -28,6 +29,10 @@ namespace ink::SDL {
 		public: static inline Music
 		LoadMusic(std::string_view audio_file_path)
 		{ return internal::MIX::Mix_LoadMUS(audio_file_path.cbegin()); }
+		
+		public: static inline auto
+		PlayMusic(Music music, int loops = 1)
+		{ return internal::MIX::Mix_PlayMusic(music, loops); }
 		
 		
 		
