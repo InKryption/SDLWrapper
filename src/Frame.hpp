@@ -82,29 +82,25 @@ namespace ink::SDL {
 		
 		// Return a raw pointer to the SDL_Window
 		public: constexpr auto*
-		window() {
-			return M_data->wnd;
-		}
+		window()
+		{ return M_data->wnd; }
 		
 		// Return a raw pointer to the SDL_Renderer
 		public: constexpr auto*
-		renderer() {
-			return M_data->rnd;
-		}
+		renderer()
+		{ return M_data->rnd; }
 		
 		
 		
 		// Return a constant reference to the event structure
 		public: constexpr const auto&
-		event() const {
-			return M_data->evt;
-		}
+		event() const
+		{ return M_data->evt; }
 		
 		// Polls the next queued event, and returns true if there is another pending event to poll.
 		public: bool
-		poll_events() {
-			return internal::SDL_PollEvent( &M_data->evt ) != 0;
-		}
+		poll_events()
+		{ return internal::SDL_PollEvent( &M_data->evt ) != 0; }
 		
 	/* END SDL-API */
 		
