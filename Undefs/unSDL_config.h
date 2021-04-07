@@ -1,0 +1,181 @@
+static constexpr auto WINDOWS7_SDK =
+#ifdef SDL_WINDOWS7_SDK
+	true
+#else
+	false
+#endif
+;
+
+static constexpr auto WINDOWS8_SDK =
+#ifdef SDL_WINDOWS8_SDK
+	true
+#else
+	false
+#endif
+;
+
+static constexpr auto WINDOWS10_SDK =
+#ifdef SDL_WINDOWS10_SDK
+	true
+#else
+	false
+#endif
+;
+
+#ifdef SDL_AUDIO_DRIVER_WASAPI
+	static constexpr auto AUDIO_DRIVER_WASAPI = SDL_AUDIO_DRIVER_WASAPI;
+	#undef SDL_AUDIO_DRIVER_WASAPI
+#endif
+
+#ifdef SDL_AUDIO_DRIVER_DSOUND
+	static constexpr auto AUDIO_DRIVER_DSOUND = SDL_AUDIO_DRIVER_DSOUND;
+	#undef SDL_AUDIO_DRIVER_DSOUND
+#endif
+
+#ifdef SDL_AUDIO_DRIVER_WINMM
+	static constexpr auto AUDIO_DRIVER_WINMM = SDL_AUDIO_DRIVER_WINMM;
+	#undef SDL_AUDIO_DRIVER_WINMM
+#endif
+
+#ifdef SDL_AUDIO_DRIVER_DISK
+	static constexpr auto AUDIO_DRIVER_DISK = SDL_AUDIO_DRIVER_DISK;
+	#undef SDL_AUDIO_DRIVER_DISK
+#endif
+
+#ifdef SDL_AUDIO_DRIVER_DUMMY
+	static constexpr auto AUDIO_DRIVER_DUMMY = SDL_AUDIO_DRIVER_DUMMY;
+	#undef SDL_AUDIO_DRIVER_DUMMY
+#endif
+
+
+
+#ifdef SDL_JOYSTICK_DINPUT
+	static constexpr auto JOYSTICK_DINPUT = SDL_JOYSTICK_DINPUT;
+	#undef SDL_JOYSTICK_DINPUT
+#endif
+
+#ifdef SDL_JOYSTICK_HIDAPI
+	static constexpr auto JOYSTICK_HIDAPI = SDL_JOYSTICK_HIDAPI;
+	#undef SDL_JOYSTICK_HIDAPI
+#endif
+
+#ifdef SDL_JOYSTICK_RAWINPUT
+	static constexpr auto JOYSTICK_RAWINPUT = SDL_JOYSTICK_RAWINPUT;
+	#undef SDL_JOYSTICK_RAWINPUT
+#endif
+
+#ifdef SDL_JOYSTICK_VIRTUAL
+	static constexpr auto JOYSTICK_VIRTUAL = SDL_JOYSTICK_VIRTUAL;
+	#undef SDL_JOYSTICK_VIRTUAL
+#endif
+
+#ifdef SDL_JOYSTICK_WGI
+	static constexpr auto JOYSTICK_WGI = SDL_JOYSTICK_WGI;
+	#undef SDL_JOYSTICK_WGI
+#endif
+
+#ifdef SDL_JOYSTICK_XINPUT
+	static constexpr auto JOYSTICK_XINPUT = SDL_JOYSTICK_XINPUT;
+	#undef SDL_JOYSTICK_XINPUT
+#endif
+
+#ifdef SDL_HAPTIC_DINPUT
+	static constexpr auto HAPTIC_DINPUT = SDL_HAPTIC_DINPUT;
+	#undef SDL_HAPTIC_DINPUT
+#endif
+
+#ifdef SDL_HAPTIC_XINPUT
+	static constexpr auto HAPTIC_XINPUT = SDL_HAPTIC_XINPUT;
+	#undef SDL_HAPTIC_XINPUT
+#endif
+
+#ifdef SDL_SENSOR_WINDOWS
+	static constexpr auto SENSOR_WINDOWS = SDL_SENSOR_WINDOWS;
+	#undef SDL_SENSOR_WINDOWS
+#endif
+
+#ifdef SDL_LOADSO_WINDOWS
+	static constexpr auto LOADSO_WINDOWS = SDL_LOADSO_WINDOWS;
+	#undef SDL_LOADSO_WINDOWS
+#endif
+
+#ifdef SDL_THREAD_WINDOWS
+	static constexpr auto THREAD_WINDOWS = SDL_THREAD_WINDOWS;
+	#undef SDL_THREAD_WINDOWS
+#endif
+
+#ifdef SDL_TIMER_WINDOWS
+	static constexpr auto TIMER_WINDOWS = SDL_TIMER_WINDOWS;
+	#undef SDL_TIMER_WINDOWS
+#endif
+
+#ifdef SDL_VIDEO_DRIVER_DUMMY
+	static constexpr auto VIDEO_DRIVER_DUMMY = SDL_VIDEO_DRIVER_DUMMY;
+	#undef SDL_VIDEO_DRIVER_DUMMY
+#endif
+
+#ifdef SDL_VIDEO_DRIVER_WINDOWS
+	static constexpr auto VIDEO_DRIVER_WINDOWS = SDL_VIDEO_DRIVER_WINDOWS;
+	#undef SDL_VIDEO_DRIVER_WINDOWS
+#endif
+
+#ifdef SDL_VIDEO_RENDER_D3D
+	static constexpr auto VIDEO_RENDER_D3D = SDL_VIDEO_RENDER_D3D;
+	#undef SDL_VIDEO_RENDER_D3D
+#endif
+
+#ifdef SDL_VIDEO_RENDER_D3D11
+	static constexpr auto VIDEO_RENDER_D3D11 = SDL_VIDEO_RENDER_D3D11;
+	#undef SDL_VIDEO_RENDER_D3D11
+#endif
+
+#ifdef SDL_VIDEO_OPENGL
+	static constexpr auto VIDEO_OPENGL = SDL_VIDEO_OPENGL;
+	#undef SDL_VIDEO_OPENGL
+#endif
+
+#ifdef SDL_VIDEO_OPENGL_WGL
+	static constexpr auto VIDEO_OPENGL_WGL = SDL_VIDEO_OPENGL_WGL;
+	#undef SDL_VIDEO_OPENGL_WGL
+#endif
+
+#ifdef SDL_VIDEO_RENDER_OGL
+	static constexpr auto VIDEO_RENDER_OGL = SDL_VIDEO_RENDER_OGL;
+	#undef SDL_VIDEO_RENDER_OGL
+#endif
+
+#ifdef SDL_VIDEO_RENDER_OGL_ES2
+	static constexpr auto VIDEO_RENDER_OGL_ES2 = SDL_VIDEO_RENDER_OGL_ES2;
+	#undef SDL_VIDEO_RENDER_OGL_ES2
+#endif
+
+#ifdef SDL_VIDEO_OPENGL_ES2
+	static constexpr auto VIDEO_OPENGL_ES2 = SDL_VIDEO_OPENGL_ES2;
+	#undef SDL_VIDEO_OPENGL_ES2
+#endif
+
+#ifdef SDL_VIDEO_OPENGL_EGL
+	static constexpr auto VIDEO_OPENGL_EGL = SDL_VIDEO_OPENGL_EGL;
+	#undef SDL_VIDEO_OPENGL_EGL
+#endif
+
+#ifdef SDL_VIDEO_VULKAN
+	static constexpr auto VIDEO_VULKAN = SDL_VIDEO_VULKAN;
+	#undef SDL_VIDEO_VULKAN
+#endif
+
+#ifdef SDL_POWER_WINDOWS
+	static constexpr auto POWER_WINDOWS = SDL_POWER_WINDOWS;
+	#undef SDL_POWER_WINDOWS
+#endif
+
+#ifdef SDL_FILESYSTEM_WINDOWS
+	static constexpr auto FILESYSTEM_WINDOWS = SDL_FILESYSTEM_WINDOWS;
+	#undef SDL_FILESYSTEM_WINDOWS
+#endif
+
+#ifdef SDL_ASSEMBLY_ROUTINES
+	static constexpr auto ASSEMBLY_ROUTINES = SDL_ASSEMBLY_ROUTINES;
+	#undef SDL_ASSEMBLY_ROUTINES
+#endif
+
