@@ -31,9 +31,10 @@ int main() {
 			break;
 		}
 		
-		frame.DrawClear(SDL::RGB_Preset::WHITE);
-		frame.DrawTexture<int>(tex, nullptr, nullptr);
-		frame.DrawUpdate();
+		frame
+		.DrawClear(SDL::RGB_Preset::WHITE)
+		.DrawTexture<int>(tex, nullptr, nullptr)
+		.DrawUpdate();
 		
 	}
 	

@@ -122,53 +122,59 @@ namespace ink::SDL {
 		
 	/* START DRAW FUNCTIONS */
 		
-		public: auto
+		public: constexpr ssize_t
+		LastErrorCode()
+		{ return M_data->last_errcode; }
+		
+		
+		
+		public: Frame&
 		DrawClear()
-		{ return internal::SDL_RenderClear(renderer()); }
+		{ M_data->last_errcode = internal::SDL_RenderClear(renderer()); return *this; }
 		
-		public: auto
+		public: Frame&
 		DrawClear(internal::Uint8 r, internal::Uint8 g, internal::Uint8 b, internal::Uint8 a = 255)
-		{ return DrawColor(r, g, b, a) & DrawClear(); }
+		{ DrawColor(r, g, b, a); DrawClear(); return *this; }
 		
-		public: auto
+		public: Frame&
 		DrawClear(RGBA rgba)
-		{ return DrawColor(rgba) & DrawClear(); }
+		{ DrawColor(rgba); DrawClear(); return *this; }
 		
 		
 		
-		public: int
+		public: Frame&
 		DrawColor(internal::Uint8 r, internal::Uint8 g, internal::Uint8 b, internal::Uint8 a = 255)
-		{ return internal::SDL_SetRenderDrawColor(renderer(), r, g, b, a); }
+		{ M_data->last_errcode = internal::SDL_SetRenderDrawColor(renderer(), r, g, b, a); return *this; }
 		
-		public: int
+		public: Frame&
 		DrawColor(RGBA rgba)
-		{ return DrawColor(rgba.r, rgba.g, rgba.b, rgba.a); }
+		{ DrawColor(rgba.r, rgba.g, rgba.b, rgba.a); return *this; }
 		
 		
 		
-		public: template<detail::arithmetic T> auto
+		public: template<detail::arithmetic T> Frame&
 		DrawPoint(T x, T y)
-		{ return detail::geometry_impl<T>::RenderDrawPoint(renderer(), x, y); }
+		{ M_data->last_errcode = detail::geometry_impl<T>::RenderDrawPoint(renderer(), x, y); return *this; }
 		
-		public: template<detail::arithmetic T> int
+		public: template<detail::arithmetic T> Frame&
 		DrawPoint(std::span<Point<T>> points)
-		{ return detail::geometry_impl<T>::RenderDrawPoints(renderer(), &*points.begin(), points.size()); }
+		{ M_data->last_errcode = detail::geometry_impl<T>::RenderDrawPoints(renderer(), &*points.begin(), points.size()); return *this; }
 		
-		public: template<detail::arithmetic T> auto
+		public: template<detail::arithmetic T> Frame&
 		DrawLine(T x1, T y1, T x2, T y2)
-		{ return detail::geometry_impl<T>::RenderDrawLine(renderer(), x1, y1, x2, y2); }
+		{ M_data->last_errcode = detail::geometry_impl<T>::RenderDrawLine(renderer(), x1, y1, x2, y2); return *this; }
 		
-		public: template<detail::arithmetic T> auto
+		public: template<detail::arithmetic T> Frame&
 		DrawLine(std::span<Point<T>> points)
-		{ return detail::geometry_impl<T>::RenderDrawLines(renderer(), &*points.begin(), points.size()); }
+		{ M_data->last_errcode = detail::geometry_impl<T>::RenderDrawLines(renderer(), &*points.begin(), points.size()); return *this; }
 		
-		public: template<detail::arithmetic T> auto
+		public: template<detail::arithmetic T> Frame&
 		DrawRect(T x, T y, T w, T h)
-		{ Rect<T> rect; return detail::geometry_impl<T>::RenderDrawRect(renderer(), &rect); }
+		{ Rect<T> rect; M_data->last_errcode = detail::geometry_impl<T>::RenderDrawRect(renderer(), &rect); return *this; }
 		
-		public: template<detail::arithmetic T> auto
+		public: template<detail::arithmetic T> Frame&
 		DrawRect(std::span<Rect<T>> rects)
-		{ return detail::geometry_impl<T>::RenderDrawRects(renderer(), &*rects.begin(), rects.size()); }
+		{ M_data->last_errcode = detail::geometry_impl<T>::RenderDrawRects(renderer(), &*rects.begin(), rects.size()); return *this; }
 		
 		
 		
@@ -198,9 +204,9 @@ namespace ink::SDL {
 		 * @param dst Can safely be either constructed as an SDL::Rect, or as nullptr to ignore (defaults to texture { width , height }).
 		 * @param src Can safely be either constructed as an SDL::Rect, or as nullptr to ignore (defaults to frame { width , height }).
 		*/
-		public: template<detail::arithmetic T> auto
+		public: template<detail::arithmetic T> Frame&
 		DrawTexture(Texture const& tex, RECT<T> const& dst = {}, RECT<int> const& src = {})
-		{ return detail::geometry_impl<T>::RenderCopy(renderer(), tex, src.value, dst.value); }
+		{ M_data->last_errcode = detail::geometry_impl<T>::RenderCopy(renderer(), tex, src.value, dst.value); return *this; }
 		
 		/**
 		 * @param tex Texture to render.
@@ -210,15 +216,15 @@ namespace ink::SDL {
 		 * @param center Can safely be either constructed as an SDL::Rect, or as nullptr to ignore (defaults to { dst.w /2 , dst.h/2 }).
 		 * @param flip Flip state with which to render the texture.
 		*/
-		public: template<detail::arithmetic T> auto
+		public: template<detail::arithmetic T> Frame&
 		DrawTexture(Texture const& tex, RECT<T> const& dst, RECT<int> const& src, double angle, POINT<T> const& center = {}, Flip const& flip = Flip::SDL_FLIP_NONE)
-		{ return detail::geometry_impl<T>::RenderCopyEx(renderer(), tex, src.value, dst.value, angle, &center, flip); }
+		{ M_data->last_errcode = detail::geometry_impl<T>::RenderCopyEx(renderer(), tex, src.value, dst.value, angle, &center, flip); return *this; }
 		
 		
 		
-		public: auto
+		public: void
 		DrawUpdate()
-		{ return internal::SDL_RenderPresent(renderer()); }
+		{ internal::SDL_RenderPresent(renderer()); }
 		
 	/* END DRAW FUNCTIONS */
 		
@@ -229,7 +235,8 @@ namespace ink::SDL {
 			internal::SDL_Event evt{};
 			internal::SDL_Window* wnd{nullptr};
 			internal::SDL_Renderer* rnd{nullptr};
-			internal::SDL_WindowFlags f;
+			ssize_t last_errcode = 0;
+			
 			void init(	char const* title,
 						int x, int y, int w, int h,
 						ink::SDL::internal::Uint32 wnd_flags,
